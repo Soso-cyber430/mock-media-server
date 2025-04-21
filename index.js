@@ -1,9 +1,5 @@
 const http = require('http');
 
-const PORT = 3000;
-server.listen(PORT, () => {
-  console.log(`Server gliding at http://localhost:${PORT}`);
-
 const data = {
   movies: [
     {
@@ -57,24 +53,143 @@ const data = {
 const server = http.createServer((req, res) => {
   res.setHeader("Content-Type", "application/json");
 
-  switch (req.url) {
-    case "/movies":
-      res.writeHead(200);
-      res.end(JSON.stringify(data.movies, null, 2));
-      break;
-    case "/series":
-      res.writeHead(200);
-      res.end(JSON.stringify(data.series, null, 2));
-      break;
-    case "/songs":
-      res.writeHead(200);
-      res.end(JSON.stringify(data.songs, null, 2));
-      break;
-    default:
-      res.writeHead(404, { "Content-Type": "text/plain" });
-      res.end("404 - Not Found, fam 😔");
+  // Handle GET requests
+  if (req.method === 'GET') {
+    switch (req.url) {
+      case "/movies":
+        res.writeHead(200);
+        res.end(JSON.stringify(data.movies, null, 2));
+        break;
+      case "/series":
+        res.writeHead(200);
+        res.end(JSON.stringify(data.series, null, 2));
+        break;
+      case "/songs":
+        res.writeHead(200);
+        res.end(JSON.stringify(data.songs, null, 2));
+        break;
+      default:
+        res.writeHead(404, { "Content-Type": "text/plain" });
+        res.end("404 - Not Found, fam 😔");
+    }
+  }
+  
+  // Handle POST requests
+  else if (req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk;
+    });
+
+    req.on('end', () => {
+      const newItem = JSON.parse(body);
+      switch (req.url) {
+        case "/movies":
+          data.movies.push(newItem);
+          res.writeHead(201);
+          res.end(JSON.stringify(data.movies, null, 2));
+          break;
+        case "/series":
+          data.series.push(newItem);
+          res.writeHead(201);
+          res.end(JSON.stringify(data.series, null, 2));
+          break;
+        case "/songs":
+          data.songs.push(newItem);
+          res.writeHead(201);
+          res.end(JSON.stringify(data.songs, null, 2));
+          break;
+        default:
+          res.writeHead(404, { "Content-Type": "text/plain" });
+          res.end("404 - Not Found, fam 😔");
+      }
+    });
+  }
+
+  // Handle DELETE requests
+  else if (req.method === 'DELETE') {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk;
+    });
+
+    req.on('end', () => {
+      const { title } = JSON.parse(body);
+
+      switch (req.url) {
+        case "/movies":
+          data.movies = data.movies.filter(movie => movie.title !== title);
+          res.writeHead(200);
+          res.end(JSON.stringify(data.movies, null, 2));
+          break;
+        case "/series":
+          data.series = data.series.filter(series => series.title !== title);
+          res.writeHead(200);
+          res.end(JSON.stringify(data.series, null, 2));
+          break;
+        case "/songs":
+          data.songs = data.songs.filter(song => song.title !== title);
+          res.writeHead(200);
+          res.end(JSON.stringify(data.songs, null, 2));
+          break;
+        default:
+          res.writeHead(404, { "Content-Type": "text/plain" });
+          res.end("404 - Not Found, fam 😔");
+      }
+    });
+  }
+
+  // Handle PUT requests
+  else if (req.method === 'PUT') {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk;
+    });
+
+    req.on('end', () => {
+      const updatedItem = JSON.parse(body);
+      let updatedArray;
+
+      switch (req.url) {
+        case "/movies":
+          updatedArray = data.movies.map(movie => 
+            movie.title === updatedItem.title ? updatedItem : movie
+          );
+          data.movies = updatedArray;
+          res.writeHead(200);
+          res.end(JSON.stringify(data.movies, null, 2));
+          break;
+        case "/series":
+          updatedArray = data.series.map(series => 
+            series.title === updatedItem.title ? updatedItem : series
+          );
+          data.series = updatedArray;
+          res.writeHead(200);
+          res.end(JSON.stringify(data.series, null, 2));
+          break;
+        case "/songs":
+          updatedArray = data.songs.map(song => 
+            song.title === updatedItem.title ? updatedItem : song
+          );
+          data.songs = updatedArray;
+          res.writeHead(200);
+          res.end(JSON.stringify(data.songs, null, 2));
+          break;
+        default:
+          res.writeHead(404, { "Content-Type": "text/plain" });
+          res.end("404 - Not Found, fam 😔");
+      }
+    });
+  }
+  
+  // Handle unsupported methods
+  else {
+    res.writeHead(405, { "Content-Type": "text/plain" });
+    res.end("405 - Method Not Allowed");
   }
 });
 
-
+const PORT = 3000;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
