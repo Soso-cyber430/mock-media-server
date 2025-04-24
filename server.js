@@ -5,7 +5,7 @@ const { getData, saveData } = require('./Filehandler');
 const port = 3000;
 const host = 'localhost';
 
-// Create data.json if it doesn’t exist
+
 if (!fs.existsSync('./data.json')) {
   const defaultData = { movies: [], songs: [], series: [] };
   fs.writeFileSync('./data.json', JSON.stringify(defaultData, null, 2));
