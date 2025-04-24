@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Media API Documentation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
 </head>
 <body>
-  <h1>Welcome to the Media API</h1>
-  <p>Use the following endpoints to interact with the data: </p>
+    <h1>API Documentation</h1>
+    <p>This is a simple mock media server. Here are the available endpoints:</p>
 
-  <h2>GET</h2>
-  <ul>
-    <li>/movies</li>
-    <li>/songs</li>
-    <li>/series</li>
-  </ul>
+    <h2>GET /movies, /songs, /series</h2>
+    <p>Returns a list of media items of the specified type (movies, songs, or series).</p>
 
-  <h2>POST</h2>
-  <p>Send JSON body like:</p>
-  <pre>{
-  "title": "Interstellar",
-  "genre": "Sci-Fi",
-  "year": "2014"
-}</pre>
+    <h2>POST /movies, /songs, /series</h2>
+    <p>Add a new item to the specified media type. Example body:</p>
+    <pre>
+      { 
+        "title": "Movie Title",
+        "genre": "Action",
+        "year": 2023
+      }
+    </pre>
 
-  <h2>PUT</h2>
-  <p>Same structure as POST. Updates if title exists.</p>
+    <h2>PUT /movies, /songs, /series</h2>
+    <p>Update an existing item. Example body:</p>
+    <pre>
+      { 
+        "title": "Updated Title",
+        "genre": "Drama",
+        "year": 2024
+      }
+    </pre>
 
-  <h2>DELETE</h2>
-  <p>Send JSON body:</p>
-  <pre>{
-  "title": "Spirited away"
-}</pre>
+    <h2>DELETE /movies, /songs, /series</h2>
+    <p>Delete a media item by title. Example body:</p>
+    <pre>
+      { 
+        "title": "Movie Title"
+      }
+    </pre>
 </body>
 </html>
