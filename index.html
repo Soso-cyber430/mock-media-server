@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Media API Documentation</title>
+</head>
+<body>
+  <h1>Welcome to the Media API</h1>
+  <p>Use the following endpoints to interact with your data:</p>
+
+  <h2>GET</h2>
+  <ul>
+    <li>/movies</li>
+    <li>/songs</li>
+    <li>/series</li>
+  </ul>
+
+  <h2>POST</h2>
+  <p>Send JSON body like:</p>
+  <pre>{
+  "title": "Interstellar",
+  "genre": "Sci-Fi",
+  "year": "2014"
+}</pre>
+
+  <h2>PUT</h2>
+  <p>Same structure as POST. Updates if title exists.</p>
+
+  <h2>DELETE</h2>
+  <p>Send JSON body:</p>
+  <pre>{
+  "title": "Interstellar"
+}</pre>
+</body>
+</html>

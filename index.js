@@ -1,3 +1,5 @@
+//This is my orginal code for the mock media server 
+
 const http = require('http');
 
 const data = {
@@ -11,15 +13,15 @@ const data = {
         RottenTomatoes: "87%"
       }
     },
-    {
-      title: "Spirited Away",
-      genre: "Fantasy",
+      {
+        title: "Spirited Away",
+        genre: "Fantasy",
       cast: ["Rumi Hiiragi", "Miyu Irino"],
-      ratings: {
-        IMDB: 8.6,
-        RottenTomatoes: "97%"
+        ratings: {
+          IMDB: 8.6,
+          RottenTomatoes: "97%"
+        }
       }
-    }
   ],
   series: [
     {
@@ -182,10 +184,10 @@ const server = http.createServer((req, res) => {
     });
   }
   
-  // Handle unsupported methods
+  //Handle unsupported methods
   else {
     res.writeHead(405, { "Content-Type": "text/plain" });
-    res.end("405 - Method Not Allowed");
+res.end("405 - Method Not Allowed");
   }
 });
 
